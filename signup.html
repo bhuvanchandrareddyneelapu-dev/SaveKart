@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SaveKart Sign Up</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+    font-family:Poppins,sans-serif;
+    background:linear-gradient(135deg,#0f172a,#1e1b4b,#581c87);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.signup-box{
+    width:450px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    padding:40px;
+    border-radius:20px;
+    color:white;
+}
+
+.signup-box h1{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.input-box{
+    margin:15px 0;
+}
+
+.input-box input{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    outline:none;
+}
+
+.signup-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#ec4899;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.signup-btn:hover{
+    background:#db2777;
+}
+
+a{
+    color:#c4b5fd;
+    text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="signup-box">
+
+    <h1>Create Account</h1>
+
+    <form>
+
+        <div class="input-box">
+            <input type="text" placeholder="Full Name">
+        </div>
+
+        <div class="input-box">
+            <input type="email" placeholder="Email Address">
+        </div>
+
+        <div class="input-box">
+            <input type="password" placeholder="Password">
+        </div>
+
+        <div class="input-box">
+            <input type="password" placeholder="Confirm Password">
+        </div>
+
+        <button class="signup-btn">
+            Sign Up
+        </button>
+
+        <p style="text-align:center;margin-top:20px;">
+            Already have an account?
+            <a href="login.html">Login</a>
+        </p>
+
+    </form>
+
+</div>
+
+</body>
+</html>

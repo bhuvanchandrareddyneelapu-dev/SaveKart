@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaveKart Products</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Poppins,sans-serif;
+}
+
+body{
+    background:#07152d;
+    color:white;
+    padding:30px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.products-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.product-card{
+    background:#16233e;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.product-card img{
+    width:180px;
+    height:180px;
+    object-fit:contain;
+}
+
+.product-card h3{
+    margin:15px 0;
+}
+
+.product-card button{
+    background:#5865ff;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:10px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="pageTitle">Products</h1>
+
+<div class="products-grid" id="productsContainer"></div>
+
+<script>
+
+const products = {
+
+grocery:[
+{
+name:"Rice",
+image:"images/rice.png1.png"
+},
+{
+name:"Sugar",
+image:"images/sugar.png1.png"
+},
+{
+name:"Oil",
+image:"images/oil.png1.png"
+}
+],
+
+electronics:[
+{
+name:"Laptop",
+image:"images/Laptop.png"
+},
+{
+name:"Smart TV",
+image:"images/Television.png"
+},
+{
+name:"Earbuds",
+image:"images/EarPods.png"
+},
+{
+name:"Smart Watch",
+image:"images/Smart Watch.png"
+},
+{
+name:"Hard Disk",
+image:"images/Hard Disc..png"
+},
+{
+name:"Head Phones",
+image:"images/Head Phones.png"
+},
+{
+name:"Bluetooth Speaker",
+image:"images/Bluetooth.png"
+},
+{
+name:"Gaming Console",
+image:"images/Gaming Console.png"
+},
+{
+name:"Digital Camera",
+image:"images/Camera.png"
+},
+{
+name:"Printer",
+image:"images/Printer.png"
+},
+{
+name:"Memory Card",
+image:"images/Memory Card.png"
+},
+{
+name:"Power Bank",
+image:"images/Powerbank.png"
+},
+{
+name:"Projector",
+image:"images/Projector.png"
+},
+{
+name:"Pen Drive",
+image:"images/Pen Drive.png"
+},
+{
+name:"Soundbar",
+image:"images/Sound Bar.png"
+},
+{
+name:"Desktop Computer",
+image:"images/Computer.png"
+},
+{
+name:"WIFI Router",
+image:"images/Wifi Router.png"
+},
+{
+name:"Tablets",
+image:"images/tablets.png"
+},
+{
+name:"Mouse",
+image:"images/Mouse.png"
+},
+{
+name:"Keyboard",
+image:"images/KeyBoard.png"
+}
+],
+
+mobiles:[
+{
+name:"iPhone 15 pro max",
+image:"images/iPhone 15 Pro Max.png"
+},
+{
+name:"Samsung Galaxy S24 Ultra",
+image:"images/Samsung Galaxy S24 Ultra.png"
+},
+{
+name:"OnePlus 12 Pro",
+image:"images/One Plus 12.png"
+},
+{
+name:"Google Pixel 8 Pro",
+image:"images/Google Pixel 8 Pro.png"
+},
+{
+name:"Asus ROG Phone 8 Pro",
+image:"images/Asus ROG phone 8 Pro.png"
+},
+{
+name:"infinix Note 30 Pro",
+image:"images/infinix Note 30 VIP.png"
+},
+{
+name:"iQOO 12",
+image:"images/IQOO 12.png"
+},
+{
+name:"Micromax IN Note 2",
+image:"images/Micromax IN Note 2.png"
+},
+{
+name:"Lava Agni 2 5G",
+image:"images/Lava Agni 2 5G.png"
+},
+{
+name:"Motorola Edge 40 Neo",
+image:"images/Motorola Edge 40 Neo.png"
+},
+{
+name:"Nokia X30",
+image:"images/Nokia X30.png"
+},
+{
+name:"Nothing Phone",
+image:"images/Nothing Phone(2).png"
+},
+{
+name:"Oppo Reno 11 Pro+",
+image:"images/Oppo Reno 11 Pro+.png"
+},
+{
+name:"Realme GT 5 Pro",
+image:"images/Realme GT 5 Pro.png"
+},
+{
+name:"Sony Xperia 1V",
+image:"images/Sony Xperia 1V.png"
+},
+{
+name:"Vivo X100 Pro",
+image:"images/Vivo X100 Pro.png"
+},
+{
+name:"Xiaomi 14 Pro",
+image:"images/Xiaomi 14 Pro.png"
+}
+],
+
+appliances:[
+{
+name:"Air Conditioner",
+image:"images/AC.png"
+},
+{
+name:"Washing Machine",
+image:"images/washing machine.png"
+},
+{
+name:"Oven",
+image:"images/oven.png"
+},
+{
+name:"Water Purifier",
+image:"images/purifier.png"
+},
+{
+name:"TV",
+image:"images/TV.png"
+},
+{
+name:"Geaser",
+image:"images/geaser.png"
+},
+{
+name:"Celling Fan",
+image:"images/fan.png"
+},
+{
+name:"Dish Washer",
+image:"images/Dish washer.png"
+},
+{
+name:"Air Cooler",
+image:"images/air cooler.png"
+},
+{
+name:"Refrigerator",
+image:"images/Fridge.png"
+},
+{
+name:"Toaster",
+image:"images/Toaster.png"
+},
+{
+name:"Micro oven",
+image:"images/micro oven.png"
+},
+{
+name:"Mixi",
+image:"images/mixi.png"
+},
+{
+name:"Vaccum Cleaner",
+image:"images/vaccum cleaner.png"
+},
+{
+name:"Kettle",
+image:"images/Kettle.png"
+},
+{
+name:"Room Heater",
+image:"images/Room Heater.png"
+},
+{
+name:"Air Freshner",
+image:"images/Air Freshner.png"
+},
+{
+name:"Table Fan",
+image:"images/Table Fan.png"
+},
+{
+name:"Electric Cooker",
+image:"images/Electric cooker.png"
+},
+{
+name:"Iron Box",
+image:"images/Iron Box.png"
+},
+{
+name:"Induction CookTop",
+image:"images/Induction CookTop.png"
+},
+{
+name:"Air Fryer",
+image:"images/Air Fryer.png"
+}
+],
+
+biryani: [
+{
+name: "Chicken Biryani",
+image: "images/Chicken Briyani.png"
+},
+{
+name: "Chicken Curry",
+image: "images/Chicken Curry.png"
+},
+{
+name: "Chicken Lollipop",
+image: "images/Chicken Lollipop.png"
+},
+{
+name: "Chicken Sharwama",
+image: "images/Chicken Sharwama.png"
+},
+{
+name: "Chicken Tandoori",
+image: "images/Chicken Tandoori.png"
+},
+{
+name: "Egg Curry",
+image: "images/Egg Curry.png"
+},
+{
+name: "Prawns Biryani",
+image: "images/Prawns Briyani.png"
+},
+{
+name: "Mutton Biryani",
+image: "images/Mutton Briyani.png"
+},
+{
+name: "Mutton Curry",
+image: "images/Mutton Curry.png"
+},
+{
+name: "Kebabs",
+image: "images/Kebabs.png"
+},
+{
+name:"Chicken 65",
+image:"images/Chicken 65.png"
+},
+{
+name:"Chicken Roll",
+image:"images/Chicken Roll.png"
+},
+{
+name:"Chicken Pizza",
+image:"images/Chicken Pizza.png"
+},
+{
+name:"French Fries",
+image:"images/French Fries.png"
+},
+{
+name:"Mushroom Curry",
+image:"images/Mushroom Curry.png"
+}
+],
+Icecream:[
+{
+name:"VANILLA",
+image:"images/VANILLA.png"
+},
+{
+name:"CHOCOLATE",
+image:"images/CHOCOLATE.png"
+},
+{
+name:"STRAWBERRY",
+image:"images/STRAWBERRY.png"
+},
+{
+name:"BLACKCURRANT",
+image:"images/BLACK CURRENT.png"
+},
+{
+name:"BUTTERSCROTCH",
+image:"images/BUTTERSCROTCH.png"
+},
+{
+name:"COOKIES 'N' CREAM",
+image:"images/COOKIES & CREAM.png"
+},
+{
+name:"BELGIAN CHOCOLATE",
+image:"images/BELGIAN CHOCOLATE.png"
+},
+{
+name:"MINT",
+image:"images/MINT.png"
+},
+{
+name:"ROASTED AMLMONDA",
+image:"images/ROASTED ALMONDA.png"
+},
+{
+name:"CHOCO BROWNIE",
+image:"images/CHOCO BROWNIE.png"
+},
+{
+name:"KESAR MALAI",
+image:"images/KESAR MALAI.png"
+},
+{
+name:"FRUITS 'N' NUTS",
+image:"images/FRUITS 'N' NUTS.png"
+},
+{
+name:"CHOCOBAR",
+image:"images/CHOCOBAR.png"
+},
+{
+name:"CRUNCH BAR",
+image:"images/CRUNCH BAR.png"
+},
+{
+name:"KULFI",
+image:"images/kulfi.png"
+}
+],
+
+milk:[
+{
+name:"visakha diary cow milk",
+image:"images/visakha cow milk.png"
+},
+{
+name:"visakha diary buffalo milk",
+image:"images/visakha buffolo milk.png"
+},
+{
+name:"visakha diary butter",
+image:"images/visakha butter.png"
+},
+{
+name:"visakha diary ghee",
+image:"images/visakha ghee.png"
+},
+{
+name:"visakha diary paneer",
+image:"images/visakha paneer.png"
+},
+{
+name:"visakha diary curd",
+image:"images/visakha curd.png"
+},
+{
+name:"Amul Badam Milk",
+image:"images/amul badammilk.png"
+},
+{
+name:"Amul Buffalo Milk",
+image:"images/amul buffalomilk.png"
+},
+{
+name:"Amul Cow Milk",
+image:"images/amul cowmilk.png"
+},
+{
+name:"Amul Ghee",
+image:"images/amul ghee.png"
+},
+{
+name:"Amul Paneer",
+image:"images/amul paneer.png"
+},
+{
+name:"Amul Curd",
+image:"images/amul curd.png"
+},
+{
+name:"Amul Butter",
+image:"images/amul butter.png"
+},
+{
+name:"Amul Butter Milk",
+image:"images/amul buttermilk.png"
+},
+{
+name:"Amul Milk Powder",
+image:"images/amul milkpowder.png"
+},
+{
+name:"Amul Cheese",
+image:"images/amul cheese.png"
+},
+{
+name:"Amul Lassi",
+image:"images/amul lasssi.png"
+},
+{
+name:"Heritage Badam Milk",
+image:"images/heritage badammilk.png"
+},
+{
+name:"Heritage Curd",
+image:"images/heritage  curd.png"
+},
+{
+name:"Heritage Butter",
+image:"images/heritage butter.png"
+},
+{
+name:"Heritage Butter Milk",
+image:"images/heritage buttermilk.png"
+},
+{
+name:"Heritage Cheese",
+image:"images/heritage cheese.png"
+},
+{
+name:"Heritage Cow Milk",
+image:"images/heritage cowmilk.png"
+},
+{
+name:"Heritage Ghee",
+image:"images/heritage ghee.png"
+},
+{
+name:"Heritage Milk Powder",
+image:"images/heritage milkpowder.png"
+},
+{
+name:"Heritage Paneer",
+image:"images/heritage paneer.png"
+},
+{
+name:"Jersey Curd",
+image:"images/jersey curd.png"
+},
+{
+name:"Jersey Ghee",
+image:"images/jersey ghee.png"
+},
+{
+name:"Jersey Lassi",
+image:"images/jersey Lassi.png"
+},
+{
+name:"Jersey Badam Milk",
+image:"images/jerrsey badam milk.png"
+},
+{
+name:"Jersey Butter",
+image:"images/jersey butter.png"
+},
+{
+name:"Jersey Cow Milk",
+image:"images/jersey cowmilk.png"
+}
+
+]
+
+};
+
+const params = new URLSearchParams(window.location.search);
+
+const category = params.get("category");
+const search = params.get("search");
+
+const container = document.getElementById("productsContainer");
+const title = document.getElementById("pageTitle");
+
+// Category page
+if(category && products[category]){
+
+    title.innerText = category.toUpperCase() + " PRODUCTS";
+
+    products[category].forEach(product => {
+
+        container.innerHTML += `
+        <div class="product-card">
+            <img src="${product.image}">
+            <h3>${product.name}</h3>
+            <button>Compare Prices</button>
+        </div>
+        `;
+
+    });
+
+}
+
+// Search page
+else if(search){
+
+    title.innerText = "Search Results : " + search;
+
+    let found = false;
+
+    for(let key in products){
+
+        products[key].forEach(product => {
+
+            if(product.name.toLowerCase().includes(search.toLowerCase())){
+
+                found = true;
+
+                container.innerHTML += `
+                <div class="product-card">
+                    <img src="${product.image}">
+                    <h3>${product.name}</h3>
+                    <button>Compare Prices</button>
+                </div>
+                `;
+            }
+
+        });
+
+    }
+
+    if(!found){
+        title.innerText = "No Products Found";
+    }
+
+}
+
+else{
+
+    title.innerText = "No Products Found";
+
+}
+</script>
+
+</body>
+</html>

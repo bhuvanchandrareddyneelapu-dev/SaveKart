@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaveKart - Compare. Shop. Save.</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+
+        <div class="logo">
+            <img src="https://gemini.google.com/share/fa7e98c772b2.png" alt="SaveKart Logo">
+            <h2>SaveKart</h2>
+        </div>
+
+        <nav>
+            <a href="#" class="active">Home</a>
+            <a href="#categories">Categories</a>
+            <a href="#">Favorites</a>
+            <a href="#how">How It Works</a>
+            <a href="#footer">Contact Us</a>
+            <a href="login.html" class="Login-btn">Login</a>
+            <a href="signup.html" class="btn">Sign Up</a>
+        </nav>
+
+    </header>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <div class="tagline">
+            ✨ Compare. Save. Shop Smart.
+        </div>
+
+        <h1>
+            Compare Prices <span>Instantly</span>
+        </h1>
+
+        <p>Get the Best Deals Across India</p>
+
+        <!-- Search -->
+        <div class="search-box">
+            <i class="fa fa-search"></i>
+            <input type="text" id="searchInput"
+                placeholder="Search products (e.g., iPhone, Milk, TV, Rice)">
+            <button onclick="searchProduct()">Search</button>
+        </div>
+
+
+        <!-- Features -->
+        <div class="features">
+
+            <div class="card">
+                <i class="fa fa-tags"></i>
+                <h3>Best Prices</h3>
+                <p>Compare prices from multiple platforms</p>
+            </div>
+
+            <div class="card">
+                <i class="fa fa-shield-halved"></i>
+                <h3>100% Reliable</h3>
+                <p>Updated & trusted comparisons</p>
+            </div>
+
+            <div class="card">
+                <i class="fa fa-bolt"></i>
+                <h3>Save More</h3>
+                <p>Find best deals & save money</p>
+            </div>
+
+            <div class="card">
+                
+                <i class="fa fa-bag-shopping"></i>
+                <h3>Shop Smart</h3>
+                <p>Buy wisely every time</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Trending -->
+    <section class="trending">
+
+        <h2>🔥 Trending Searches</h2>
+
+        <div class="chips">
+            <span>iPhone 17</span>
+            <span>TV</span>
+            <span>Laptops</span>
+            <span>Vegetables</span>
+            <span>Milk</span>
+            <span>Fruits</span>
+            <span>Briyani</span>
+            <span>Icecreme</span>
+            <span>Earbuds</span>
+            <span>Juices</span>
+        </div>
+    </section>
+
+
+    <!-- Categories -->
+    <section class="categories" id="categories">
+
+        <div class="cat-title">
+            <h2>📁 Browse by Category</h2>
+            <p>Explore products across top categories</p>
+        </div>
+
+        <div class="category-grid">
+
+    <div class="category-card" onclick="openCategory('grocery')">
+        <img src="images/grocery.png1.png" alt="Grocery">
+        <h3>Grocery</h3>
+    </div>
+
+    <div class="category-card" onclick="openCategory('milk')">
+        <img src="images/milk-products.png1.png" alt="Milk Products">
+        <h3>Milk Products</h3>
+    </div>
+
+    <div class="category-card" onclick="openCategory('electronics')">
+        <img src="images/electronics.png1.png" alt="Electronics">
+        <h3>Electronics</h3>
+    </div>
+
+    <div class="category-card" onclick="openCategory('mobiles')">
+        <img src="images/mobiles.png1.png" alt="Mobiles">
+        <h3>Mobiles</h3>
+    </div>
+
+    <div class="category-card" onclick="openCategory('appliances')">
+        <img src="images/appliances.png1.png" alt="Appliances">
+        <h3>Appliances</h3>
+    </div>
+
+    <div class="category-card" onclick="openCategory('biryani')">
+        <img src="images/Briyani.png1.png" alt="Biryani">
+        <h3>Biryani</h3>
+    </div>
+
+    <div class="category-card" onclick="openCategory('fashion')">
+        <img src="images/fashion.png1.png" alt="Fashion">
+        <h3>Fashion</h3>
+    </div>
+
+    <div class="category-card" onclick="openCategory('Icecream')">
+        <img src="images/Icecreme.png1.png" alt="Icecream">
+        <h3>Icecream</h3>
+    </div>
+
+</div>
+
+    </section>
+
+
+    <!-- Platforms -->
+    <section class="platforms">
+
+        <h2>Compare Prices Across Top Platforms</h2>
+
+        <div class="platform-grid">
+
+            <div class="platform-card">
+                <div class="icon">🛒</div>
+                <h3>Zepto</h3>
+                <p>10 min delivery</p>
+            </div>
+
+            <div class="platform-card">
+                <div class="icon">⚡</div>
+                <h3>Blinkit</h3>
+                <p>Quick delivery</p>
+            </div>
+
+            <div class="platform-card">
+                <div class="icon">🧀</div>
+                <h3>Instamart</h3>
+                <p>Swiggy service</p>
+            </div>
+
+            <div class="platform-card">
+                <div class="icon">📱</div>
+                <h3>JioMart</h3>
+                <p>Reliance service</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how">
+
+        <h2>How It Works</h2>
+
+        <div class="steps">
+
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon">🔍</div>
+                <h3>Search Product</h3>
+                <p>Enter product name you're looking for</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon">📊</div>
+                <h3>Compare Prices</h3>
+                <p>See prices across top platforms instantly</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon">💰</div>
+                <h3>Buy Best Deal</h3>
+                <p>Purchase from the cheapest platform</p>
+            </div>
+
+        </div>
+
+        <button class="learn-btn">Learn More</button>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+
+        <div class="footer-grid">
+
+            <div class="footer-box">
+                <h2>SaveKart</h2>
+                <p>Your trusted platform for comparing prices across India’s top shopping apps.</p>
+            </div>
+
+            <div class="footer-box">
+                <h3>Quick Links</h3>
+                <a href="#">Home</a>
+                <a href="#">How It Works</a>
+                <a href="#">Contact</a>
+                <a href="#">Admin Panel</a>
+            </div>
+
+            <div class="footer-box">
+                <h3>Legal</h3>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">About Us</a>
+            </div>
+
+            <div class="footer-box">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-linkedin"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <p class="copy">©SaveKart. All rights reserved.</p>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaveKart Login</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        body{
+            font-family:Poppins,sans-serif;
+            background:linear-gradient(135deg,#0f172a,#1e1b4b,#581c87);
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .login-box{
+            width:400px;
+            background:rgba(255,255,255,0.08);
+            backdrop-filter:blur(12px);
+            padding:40px;
+            border-radius:20px;
+            color:white;
+            text-align:center;
+        }
+
+        .login-box h1{
+            margin-bottom:30px;
+        }
+
+        .input-box{
+            margin:15px 0;
+        }
+
+        .input-box input{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            outline:none;
+        }
+
+        .login-btn{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            background:#6366f1;
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+            margin-top:15px;
+        }
+
+        .login-btn:hover{
+            background:#4f46e5;
+        }
+
+        a{
+            color:#c4b5fd;
+            text-decoration:none;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+
+    <h1>Login</h1>
+
+    <form>
+
+        <div class="input-box">
+            <input type="email" placeholder="Email Address">
+        </div>
+
+        <div class="input-box">
+            <input type="password" placeholder="Password">
+        </div>
+
+        <button class="login-btn">Login</button>
+
+        <p style="margin-top:20px;">
+            Don't have an account?
+            <a href="signup.html">Sign Up</a>
+        </p>
+
+    </form>
+
+</div>
+
+</body>
+</html>
