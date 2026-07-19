@@ -584,72 +584,73 @@ image:"images/jersey cowmilk.png"
 };
 
 const params = new URLSearchParams(window.location.search);
-
 const category = params.get("category");
 const search = params.get("search");
 
 const container = document.getElementById("productsContainer");
 const title = document.getElementById("pageTitle");
 
-// Category page
-if(category && products[category]){
-
-    title.innerText = category.toUpperCase() + " PRODUCTS";
-
-    products[category].forEach(product => {
-
-        container.innerHTML += `
-        <div class="product-card">
-            <img src="${product.image}">
-            <h3>${product.name}</h3>
-            <button>Compare Prices</button>
-        </div>
-        `;
-
-    });
-
-}
-
-// Search page
-else if(search){
-
-    title.innerText = "Search Results : " + search;
-
-    let found = false;
-
-    for(let key in products){
-
-        products[key].forEach(product => {
-
-            if(product.name.toLowerCase().includes(search.toLowerCase())){
-
-                found = true;
-
-                container.innerHTML += `
-                <div class="product-card">
-                    <img src="${product.image}">
-                    <h3>${product.name}</h3>
-                    <button>Compare Prices</button>
+async function renderProductsPage() {
+    try {
+        const remoteProducts = await SaveKartAPI.getProducts(search || '', category || '');
+        if (remoteProducts && remoteProducts.length > 0) {
+            title.innerText = category ? `${category.toUpperCase()} PRODUCTS` : (search ? `Search Results: "${search}"` : "All Products");
+            container.innerHTML = remoteProducts.map(p => `
+                <div class="product-card" onclick="window.location.href='product-detail.html?id=${p.id}'" style="cursor:pointer;">
+                    <img src="${p.mainImage || 'images/grocery.png1.png'}">
+                    <h3>${p.name}</h3>
+                    <button onclick="event.stopPropagation(); window.location.href='product-detail.html?id=${p.id}'">Compare Prices</button>
                 </div>
-                `;
-            }
-
-        });
-
+            `).join("");
+            return;
+        }
+    } catch (e) {
+        console.warn("Using local product array fallback");
     }
 
-    if(!found){
+    // Local fallback
+    if (category && products[category]) {
+        title.innerText = category.toUpperCase() + " PRODUCTS";
+        products[category].forEach((product, idx) => {
+            container.innerHTML += `
+            <div class="product-card" onclick="window.location.href='product-detail.html?id=${idx+1}'" style="cursor:pointer;">
+                <img src="${product.image}">
+                <h3>${product.name}</h3>
+                <button onclick="event.stopPropagation(); window.location.href='product-detail.html?id=${idx+1}'">Compare Prices</button>
+            </div>
+            `;
+        });
+    } else if (search) {
+        title.innerText = "Search Results : " + search;
+        let found = false;
+        let pId = 1;
+        for (let key in products) {
+            products[key].forEach(product => {
+                if (product.name.toLowerCase().includes(search.toLowerCase())) {
+                    found = true;
+                    container.innerHTML += `
+                    <div class="product-card" onclick="window.location.href='product-detail.html?id=${pId}'" style="cursor:pointer;">
+                        <img src="${product.image}">
+                        <h3>${product.name}</h3>
+                        <button onclick="event.stopPropagation(); window.location.href='product-detail.html?id=${pId}'">Compare Prices</button>
+                    </div>
+                    `;
+                }
+                pId++;
+            });
+        }
+        if (!found) title.innerText = "No Products Found";
+    } else {
         title.innerText = "No Products Found";
     }
-
 }
 
-else{
-
-    title.innerText = "No Products Found";
-
-}
+document.addEventListener("DOMContentLoaded", renderProductsPage);
 </script>
 
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/smart-search.js"></script>
+<script src="js/ai-assistant.js"></script>
 </body>
 </html>

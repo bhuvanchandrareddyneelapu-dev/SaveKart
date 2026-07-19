@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaveKart - Smart Shopping Cart & Savings Breakdown</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer;">
+            <img src="https://gemini.google.com/share/fa7e98c772b2.png" alt="SaveKart Logo">
+            <h2>SaveKart</h2>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Categories</a>
+            <a href="wishlist.html">Wishlist</a>
+            <a href="cart.html" class="active">Cart</a>
+            <a href="login.html" class="Login-btn">Login</a>
+            <a href="signup.html" class="btn">Sign Up</a>
+        </nav>
+    </header>
+
+    <div style="max-width:1100px; margin:40px auto; padding:0 20px;">
+        <h1 style="text-align:center; font-size:36px; margin-bottom:30px; color:#38bdf8;"><i class="fa fa-shopping-cart" style="color:#5865ff;"></i> Smart Shopping Cart</h1>
+
+        <div style="display:grid; grid-template-columns:2fr 1fr; gap:30px;" id="cartContainer">
+            <div id="cartItemsList" style="background:#16233e; padding:25px; border-radius:20px;">
+                <p style="text-align:center; color:#94a3b8;">Loading cart items...</p>
+            </div>
+
+            <div style="background:#16233e; padding:25px; border-radius:20px; height:fit-content;">
+                <h3 style="font-size:22px; margin-bottom:20px; color:#fff;">Summary & Total Savings</h3>
+                <div style="display:flex; justify-content:space-between; margin-bottom:12px; color:#cbd5e1;">
+                    <span>Total MRP:</span>
+                    <span id="summaryMrp">₹0</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:12px; color:#10b981; font-weight:600;">
+                    <span>Multi-Store Savings:</span>
+                    <span id="summarySavings">-₹0</span>
+                </div>
+                <hr style="border-color:rgba(255,255,255,0.1); margin:15px 0;">
+                <div style="display:flex; justify-content:space-between; font-size:20px; font-weight:700; color:#fff; margin-bottom:25px;">
+                    <span>Final Amount:</span>
+                    <span id="summaryTotal" style="color:#38bdf8;">₹0</span>
+                </div>
+                <button class="btn" style="width:100%; padding:14px; font-size:16px; border:none; cursor:pointer;" onclick="alert('Redirecting to partner platforms for optimal store checkout!')">Proceed to Buy at Best Prices</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+            const list = document.getElementById("cartItemsList");
+            try {
+                const items = await SaveKartAPI.getCart();
+                if (!items || items.length === 0) {
+                    list.innerHTML = `<div style="text-align:center; padding:40px 20px;">
+                        <i class="fa fa-cart-arrow-down fa-3x" style="color:#64748b; margin-bottom:15px;"></i>
+                        <h3>Your cart is empty</h3>
+                        <p style="color:#94a3b8; margin-top:8px;">Add products from cheapest sellers to start saving!</p>
+                    </div>`;
+                    return;
+                }
+
+                let totalMrp = 0;
+                let finalTotal = 0;
+
+                list.innerHTML = items.map(item => {
+                    const mrp = (item.product.mrp || 100) * item.quantity;
+                    const price = (item.product.mrp ? item.product.mrp * 0.85 : 85) * item.quantity;
+                    totalMrp += mrp;
+                    finalTotal += price;
+
+                    return `
+                        <div style="display:flex; align-items:center; gap:20px; padding:15px 0; border-bottom:1px solid rgba(255,255,255,0.08);">
+                            <img src="${item.product.mainImage}" style="width:80px; height:80px; object-fit:contain; border-radius:10px; background:#07152d; padding:8px;">
+                            <div style="flex:1;">
+                                <h4 style="font-size:16px; color:#fff; margin-bottom:6px;">${item.product.name}</h4>
+                                <span style="background:#22314d; color:#38bdf8; font-size:12px; padding:4px 8px; border-radius:6px;">Seller: ${item.selectedPlatform || 'Amazon'}</span>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-weight:700; color:#38bdf8; font-size:18px;">₹${Math.round(price)}</div>
+                                <div style="font-size:12px; color:#94a3b8;">Qty: ${item.quantity}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join("");
+
+                document.getElementById("summaryMrp").innerText = `₹${Math.round(totalMrp)}`;
+                document.getElementById("summarySavings").innerText = `-₹${Math.round(totalMrp - finalTotal)}`;
+                document.getElementById("summaryTotal").innerText = `₹${Math.round(finalTotal)}`;
+            } catch (e) {
+                list.innerHTML = `<p style="text-align:center; color:#ef4444;">Cart loaded. Login to sync online cart.</p>`;
+            }
+        });
+    </script>
+</body>
+</html>

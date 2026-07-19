@@ -4,18 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SaveKart - Compare. Shop. Save.</title>
+    <!-- SEO & Social Meta Tags -->
+    <meta name="description" content="SaveKart is India's leading smart price comparison platform comparing live prices across Amazon, Flipkart, Zepto, Blinkit, Instamart, BigBasket, Dmart, JioMart, Croma, Myntra & Meesho.">
+    <meta property="og:title" content="SaveKart - Instant Price Comparison across 15 Top Platforms">
+    <meta property="og:description" content="Search once, compare live prices, discounts, and delivery speeds across Amazon, Zepto, Blinkit & more to save money.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://savekart.up.railway.app/">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "SaveKart",
+      "url": "https://savekart.up.railway.app/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://savekart.up.railway.app/products.html?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="js/toast.js"></script>
 </head>
 
 <body>
@@ -287,8 +308,18 @@
 
 
     <!-- JavaScript -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/smart-search.js"></script>
+    <script src="js/ai-assistant.js"></script>
     <script src="script.js"></script>
-
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js');
+            });
+        }
+    </script>
 </body>
 
 </html>

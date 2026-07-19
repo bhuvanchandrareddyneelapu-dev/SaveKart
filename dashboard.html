@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - SaveKart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: white;">Save<span>Kart</span></a>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="products.html">Browse</a>
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="wishlist.html">Wishlist</a>
+            <a href="cart.html">Cart</a>
+        </nav>
+        <div class="nav-actions" id="auth-actions">
+            <a href="index.html" class="btn-secondary" onclick="localStorage.removeItem('savekart_token');">Logout</a>
+        </div>
+    </header>
+
+    <main class="dashboard-container" style="max-width: 1280px; margin: 40px auto; padding: 0 24px;">
+        <div class="welcome-header" style="margin-bottom: 32px;">
+            <h1 style="font-size: 2.2rem; font-weight: 700; color: #ffffff;">Welcome back, <span id="user-display-name" style="color: #5865ff;">Shopper</span>! 👋</h1>
+            <p style="color: #94a3b8; font-size: 1rem; margin-top: 6px;">Here is a real-time summary of your shopping savings and price alerts.</p>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="metrics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 40px;">
+            <div class="metric-card" style="background: rgba(22, 35, 62, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 24px;">
+                <div style="font-size: 2.2rem; margin-bottom: 8px;">💰</div>
+                <div style="color: #94a3b8; font-size: 0.9rem; font-weight: 500;">Total Saved Money</div>
+                <div style="font-size: 1.8rem; font-weight: 800; color: #22c55e; margin-top: 4px;" id="metric-total-saved">₹3,420</div>
+            </div>
+
+            <div class="metric-card" style="background: rgba(22, 35, 62, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 24px;">
+                <div style="font-size: 2.2rem; margin-bottom: 8px;">❤️</div>
+                <div style="color: #94a3b8; font-size: 0.9rem; font-weight: 500;">Wishlist Products</div>
+                <div style="font-size: 1.8rem; font-weight: 800; color: #ffffff; margin-top: 4px;" id="metric-wishlist-count">5 Items</div>
+            </div>
+
+            <div class="metric-card" style="background: rgba(22, 35, 62, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 24px;">
+                <div style="font-size: 2.2rem; margin-bottom: 8px;">📉</div>
+                <div style="color: #94a3b8; font-size: 0.9rem; font-weight: 500;">Active Price Alerts</div>
+                <div style="font-size: 1.8rem; font-weight: 800; color: #5865ff; margin-top: 4px;" id="metric-active-alerts">3 Active</div>
+            </div>
+
+            <div class="metric-card" style="background: rgba(22, 35, 62, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 24px;">
+                <div style="font-size: 2.2rem; margin-bottom: 8px;">⚡</div>
+                <div style="color: #94a3b8; font-size: 0.9rem; font-weight: 500;">Quick Commerce Speed</div>
+                <div style="font-size: 1.8rem; font-weight: 800; color: #eab308; margin-top: 4px;">10 Mins</div>
+            </div>
+        </div>
+
+        <!-- Savings Chart & Price Alerts -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 40px;">
+            <div style="background: rgba(22, 35, 62, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 28px;">
+                <h3 style="color: #ffffff; font-size: 1.2rem; font-weight: 600; margin-bottom: 20px;">Monthly Savings Trend (2026)</h3>
+                <canvas id="savingsChart" height="180"></canvas>
+            </div>
+
+            <div style="background: rgba(22, 35, 62, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 28px;">
+                <h3 style="color: #ffffff; font-size: 1.2rem; font-weight: 600; margin-bottom: 20px;">Active Price Alerts</h3>
+                <div id="alerts-list" style="display: flex; flex-direction: column; gap: 14px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.04); padding: 12px 16px; border-radius: 12px;">
+                        <div>
+                            <div style="color: #fff; font-weight: 600; font-size: 0.95rem;">iPhone 16 Pro Max</div>
+                            <div style="color: #94a3b8; font-size: 0.8rem;">Target: ₹1,25,000</div>
+                        </div>
+                        <span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">ACTIVE</span>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.04); padding: 12px 16px; border-radius: 12px;">
+                        <div>
+                            <div style="color: #fff; font-weight: 600; font-size: 0.95rem;">Amul Gold Milk 500ml</div>
+                            <div style="color: #94a3b8; font-size: 0.8rem;">Target: ₹32</div>
+                        </div>
+                        <span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">ACTIVE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/toast.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('savingsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'Saved Money (₹)',
+                        data: [450, 780, 1200, 1850, 2400, 2950, 3420],
+                        borderColor: '#5865ff',
+                        backgroundColor: 'rgba(88, 101, 255, 0.15)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

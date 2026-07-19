@@ -1,0 +1,21 @@
+{
+  "name": "SaveKart - Price Comparison Platform",
+  "short_name": "SaveKart",
+  "description": "Compare prices across Amazon, Flipkart, Zepto, Blinkit, Swiggy Instamart and more.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#07152d",
+  "theme_color": "#5865ff",
+  "icons": [
+    {
+      "src": "https://gemini.google.com/share/fa7e98c772b2.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://gemini.google.com/share/fa7e98c772b2.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

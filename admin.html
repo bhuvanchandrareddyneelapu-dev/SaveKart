@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaveKart - Admin & Analytics Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .metric-card {
+            background: #16233e;
+            padding: 24px;
+            border-radius: 16px;
+            border-left: 5px solid #5865ff;
+        }
+
+        .metric-card h4 {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .metric-card div {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .chart-box {
+            background: #16233e;
+            padding: 25px;
+            border-radius: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer;">
+            <img src="https://gemini.google.com/share/fa7e98c772b2.png" alt="SaveKart Logo">
+            <h2>SaveKart</h2>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Categories</a>
+            <a href="admin.html" class="active">Admin Dashboard</a>
+            <a href="login.html" class="Login-btn">Login</a>
+        </nav>
+    </header>
+
+    <main class="admin-container">
+        <h1 style="font-size:36px; color:#38bdf8; margin-bottom:30px;"><i class="fa fa-chart-pie"></i> Admin & Analytics Control Panel</h1>
+
+        <!-- Metrics Cards -->
+        <div class="metrics-grid">
+            <div class="metric-card" style="border-color:#38bdf8;">
+                <h4>Total Catalog Products</h4>
+                <div id="metricProducts">140</div>
+            </div>
+            <div class="metric-card" style="border-color:#10b981;">
+                <h4>Active Users</h4>
+                <div id="metricUsers">1,250</div>
+            </div>
+            <div class="metric-card" style="border-color:#a855f7;">
+                <h4>Active Platforms</h4>
+                <div id="metricPlatforms">15</div>
+            </div>
+            <div class="metric-card" style="border-color:#ec4899;">
+                <h4>Total Savings Generated</h4>
+                <div id="metricSavings">₹1,48,500</div>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+            <div class="chart-box">
+                <h3 style="font-size:20px; color:#fff; margin-bottom:20px;">Top Compared Categories</h3>
+                <div style="height:260px;">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-box">
+                <h3 style="font-size:20px; color:#fff; margin-bottom:20px;">Platform Market Share</h3>
+                <div style="height:260px;">
+                    <canvas id="platformShareChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Catalog Table -->
+        <div style="background:#16233e; padding:30px; border-radius:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3 style="font-size:22px; color:#fff;">Platform Rates & Catalog Management</h3>
+                <button class="btn" onclick="alert('Product addition modal opened')">+ Add Product</button>
+            </div>
+            <p style="color:#94a3b8;">All 15 platforms (Amazon, Flipkart, Zepto, Blinkit, Swiggy Instamart, BigBasket, Dmart Ready, JioMart, Reliance Fresh, Croma, Vijay Sales, Tata Neu, Myntra, Ajio, Meesho) active and receiving live price comparison requests.</p>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+            try {
+                const metrics = await SaveKartAPI.getAdminDashboard();
+                if (metrics) {
+                    if (metrics.totalProducts) document.getElementById("metricProducts").innerText = metrics.totalProducts;
+                    if (metrics.totalUsers) document.getElementById("metricUsers").innerText = metrics.totalUsers;
+                    if (metrics.activePlatforms) document.getElementById("metricPlatforms").innerText = metrics.activePlatforms;
+                    if (metrics.totalUserSavingsGenerated) document.getElementById("metricSavings").innerText = metrics.totalUserSavingsGenerated;
+                }
+            } catch (e) {
+                console.warn("Using default metric numbers");
+            }
+
+            // Render Charts
+            const ctxCat = document.getElementById("categoryChart").getContext("2d");
+            new Chart(ctxCat, {
+                type: 'bar',
+                data: {
+                    labels: ['Mobiles', 'Electronics', 'Grocery & Milk', 'Appliances', 'Biryani'],
+                    datasets: [{
+                        label: 'Comparisons (%)',
+                        data: [35, 28, 22, 15, 10],
+                        backgroundColor: '#38bdf8',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                    }
+                }
+            });
+
+            const ctxPlat = document.getElementById("platformShareChart").getContext("2d");
+            new Chart(ctxPlat, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Amazon', 'Flipkart', 'Zepto', 'Blinkit', 'Instamart'],
+                    datasets: [{
+                        data: [30, 25, 18, 15, 12],
+                        backgroundColor: ['#5865ff', '#38bdf8', '#10b981', '#ec4899', '#f59e0b']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#fff' } } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
