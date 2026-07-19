@@ -2,7 +2,9 @@
  * SaveKart Unified API Client
  * Manages REST API requests, JWT token header injection, and fallback handling.
  */
-const API_BASE_URL = 'http://localhost:8080/api/v1';
+const API_BASE_URL = (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:'))
+    ? 'http://localhost:8080/api/v1'
+    : `${window.location.origin}/api/v1`;
 
 class SaveKartAPI {
     static getAuthToken() {
