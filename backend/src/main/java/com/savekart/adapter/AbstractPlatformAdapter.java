@@ -3,7 +3,6 @@ package com.savekart.adapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDateTime;
 import java.util.concurrent.*;
 
 public abstract class AbstractPlatformAdapter implements PlatformAdapter {
